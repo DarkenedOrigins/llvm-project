@@ -12,6 +12,9 @@ using namespace llvm;
 
 PreservedAnalyses HelloWorldPass::run(Function &F,
                                       FunctionAnalysisManager &AM) {
-  errs() << F.getName() << "\n";
+  errs() << "Name: " << F.getName() << "\n"
+         << "Return Type: " << F.getReturnType() << "\n"
+         << "Calling Convention: " << F.getCallingConv() << "\n"
+         << "Instruction Count: " << F.getInstructionCount() << "\n";
   return PreservedAnalyses::all();
 }
