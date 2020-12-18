@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
@@ -10,22 +10,27 @@ def index():
 def upload():
 	fname = request.args['llname']
 	try:
-		with open('./' + fname , 'wb') as f:
+		with open('./uploadedFiles/' + fname , 'wb') as f:
 			request.files['file'].save(f)
-		return "file saved!\n", 201
+		return jsonify({'message': "file saved!\n"}), 201
 	except:
-		return "file unable to be saved\n", 500
+		return jsonify({'message': "file unable to be saved\n"}), 500
 
 
 @app.route("/upload/<fname>", methods=['POST'])
 def upload2(fname):
 	try:
-		with open('./' + fname , 'wb') as f:
+		with open('./uploadedFiles/' + fname , 'wb') as f:
 			request.files['file'].save(f)
-		return "file saved!\n", 201
+		return jsonify({'message': "file saved!\n"}), 201
 	except:
-		return "file unable to be saved\n", 500
+		return jsonify({'message': "file unable to be saved\n"}), 500
 
 
 if __name__ == '__main__':
 	app.run(debug=True)
+''' 
+CURL COMMANDS:
+curl -F "file=@./build/a.txt" localhost:5000/upload?llname=a.ll
+curl -F "file=@./build/a.txt" localhost:5000/upload/b.ll
+'''
