@@ -45,18 +45,16 @@ public class ProcessController {
 			e.printStackTrace();
 		}
 
-		String[] vals = output.split(",");
+		String[] funcs = output.split("\n");
 
-		if (vals.length < 4) {
-			return (ArrayList<ProcessObj>) Collections.singletonList(new ProcessObj("Error", output, "ERROR", "ERROR"));
+		if (funcs.length < 1) {
+			return (ArrayList<ProcessObj>) Collections.singletonList(new ProcessObj(output, "ERROR", "ERROR", "ERROR"));
 		}
 		ArrayList<ProcessObj> retval = new ArrayList<ProcessObj>();
 
-		for(int i=0; i<vals.length; i+=4){
-			if (i+4 > vals.length){
-				break;
-			}
-			retval.add(new ProcessObj(vals[i], vals[i+1], vals[i+2], vals[i+3]));
+		for(int i=0; i<funcs.length; i++){
+			String[] vals = funcs[i].split(",");
+			retval.add(new ProcessObj(vals[0], vals[1], vals[2], vals[3]));
 		}
 		return retval;
 	}
